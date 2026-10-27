@@ -110,6 +110,11 @@ DAYS = {
     "Sunday": 6,
 }
 
+def format_people_count(people_count, tilde=False):
+    tilde = "~" if tilde else ""
+    noun = "person" if people_count == 1 else "people"
+    return f"{tilde}{people_count} {noun}"
+
 SPIRITS = []
 _last_spirit_refresh = None
 
@@ -230,10 +235,10 @@ def format_people_message(data):
 
     if formatted_names:
         return (
-            f"Looks like there are ~{count} people *{verb}* in the UPL "
+            f"Looks like there are {format_people_count(count, tilde=True)} *{verb}* in the UPL "
             f"including: {formatted_names}"
         )
-    return f"Looks like there are ~{count} people *{verb}* in the UPL{spirit or '!'}"
+    return f"Looks like there are {format_people_count(count, tilde=True)} *{verb}* in the UPL{spirit or '!'}"
 
 
 async def get_presence_text():
